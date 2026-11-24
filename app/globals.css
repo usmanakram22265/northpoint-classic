@@ -1,0 +1,1226 @@
+@import "../styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* In-page jumps settle under the sticky header. */
+    scroll-padding-block-start: calc(var(--size-header) + var(--space-5));
+    background-color: var(--color-bg);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+
+  /* Headlines: Mona Sans set wide and heavy, tight tracking. */
+  h1,
+  h2 {
+    font-variation-settings: "wdth" var(--display-width);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
+  }
+
+  h1 {
+    font-weight: var(--weight-black);
+  }
+
+  h3,
+  h4 {
+    font-variation-settings: "wdth" var(--ui-width);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  /* Buttons and short labels use a slightly wide cut. */
+  .font-display {
+    font-variation-settings: "wdth" var(--ui-width);
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  a,
+  button,
+  summary,
+  label[for],
+  select {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  /* Focus ring: 2px solid blue, 2px off the element. White on the dark band. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-blue);
+    color: var(--color-on-band);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--width-page);
+    margin-inline: auto;
+    padding-inline: var(--space-gutter);
+  }
+
+  /* Full width with the page gutter: the header and the hero line up. */
+  .shell-wide {
+    width: 100%;
+    padding-inline: var(--space-gutter);
+  }
+
+  /*
+   * Sections are as tall as their content and run edge to edge, one after
+   * another, so the page scrolls as one continuous piece. Only the hero
+   * fills the first screen (.hero-screen).
+   */
+  .section {
+    position: relative;
+    isolation: isolate;
+    padding-block: var(--space-section);
+  }
+
+  .hero-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100svh - var(--size-header));
+    padding-block: var(--space-6);
+  }
+
+  /* Phones: where the booking bar is always on screen (no scroll-driven
+     motion, or reduced motion), keep the hero's own buttons clear of it. */
+  @media (max-width: 1023px) {
+    .hero-screen {
+      /* Phones and tablets: the hero takes about two thirds of the screen, so
+         the next section peeks in and invites a scroll. It still grows to fit
+         its content on short or narrow screens. */
+      min-height: 62svh;
+      padding-block-end: calc(var(--space-6) + var(--size-bar));
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+      .hero-screen {
+        padding-block-end: var(--space-6);
+      }
+    }
+  }
+
+  /*
+   * The first screen: the hero grows so that it and the "We serve" strip
+   * under it fill the screen below the header exactly. The next section
+   * starts at the fold. Both still grow to fit on very short screens.
+   */
+  .first-screen {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--size-header));
+  }
+
+  .first-screen > .hero-screen {
+    flex-grow: 1;
+    min-height: auto;
+  }
+
+  /* Desktop: slightly tighter padding so the booking form, the hero and the
+     strip still fit a 900px-tall laptop screen. */
+  @media (min-width: 1024px) {
+    .first-screen > .hero-screen {
+      padding-block: var(--space-5);
+    }
+  }
+
+  /* Phones where the booking bar is always on screen: the strip sits just
+     above the bar, so the bar never covers it. */
+  @media (max-width: 1023px) {
+    .first-screen {
+      min-height: calc(100svh - var(--size-header) - var(--size-bar));
+    }
+
+    .first-screen > .hero-screen {
+      padding-block-end: var(--space-6);
+    }
+  }
+
+  /* Phones where the bar waits off screen until the hero scrolls away. */
+  @supports (animation-timeline: view()) {
+    @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+      .first-screen {
+        min-height: calc(100svh - var(--size-header));
+      }
+    }
+  }
+
+  .section-tight {
+    padding-block: var(--space-section-tight);
+  }
+
+  /* Grid items may shrink, so nothing pushes a phone layout sideways. */
+  .grid > * {
+    min-width: 0;
+  }
+
+  /* Clip without becoming a scroll container. `overflow: hidden` would make
+     the box the scroller that `animation-timeline: view()` and `position:
+     sticky` bind to, which freezes the parallax and stops sticky columns.
+     Older browsers (no `clip`) keep `hidden`; they have no scroll timelines. */
+  .clip {
+    overflow: hidden;
+    overflow: clip;
+  }
+
+  .label {
+    font-family: var(--font-ui);
+    font-variation-settings: "wdth" var(--ui-width);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-label);
+    line-height: var(--leading-snug);
+    text-transform: uppercase;
+  }
+
+  /* Text links: blue (set by the element), underline on hover. */
+  .link {
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .link-text {
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: transparent;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .link:hover .link-text {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  .link:focus-visible .link-text {
+    text-decoration-color: currentColor;
+  }
+
+  .link:active {
+    opacity: 0.6;
+  }
+
+  /* Dark surfaces: text and headings flip, the focus ring turns white. */
+  .on-dark {
+    color: var(--color-on-band-secondary);
+  }
+
+  .on-dark h1,
+  .on-dark h2,
+  .on-dark h3,
+  .on-dark h4 {
+    color: var(--color-on-band);
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-focus-on-band);
+  }
+
+  /* The blue band: white and blue-tint text only (the band's grey-blue
+     secondary text is too weak on blue). */
+  .on-blue {
+    color: var(--color-blue-tint);
+  }
+
+  .band.band-blue {
+    background-image: var(--gradient-blue);
+  }
+
+  /* A white card sitting on a dark surface: everything flips back. */
+  .on-light {
+    color: var(--color-text);
+  }
+
+  .on-dark .on-light h1,
+  .on-dark .on-light h2,
+  .on-dark .on-light h3,
+  .on-dark .on-light h4 {
+    color: var(--color-text);
+  }
+
+  .on-dark .on-light :focus-visible {
+    outline-color: var(--color-focus);
+  }
+
+  /* The dark band: layered blue glows plus grain. */
+  .band {
+    position: relative;
+    isolation: isolate;
+    background-image: var(--gradient-band);
+  }
+
+  .band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--texture-grain);
+    opacity: var(--opacity-grain);
+    pointer-events: none;
+  }
+
+  /* Press feedback for buttons. */
+  .press {
+    transition: transform var(--dur-press) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .press:hover {
+      transform: translate3d(0, -2px, 0);
+    }
+  }
+
+  .press:active {
+    transform: translate3d(0, 0, 0) scale(0.97);
+  }
+
+  /* Hero entrance: items rise in, staggered by --i. Runs once. */
+  .enter {
+    animation: rise var(--dur-enter) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * var(--stagger));
+  }
+
+  /* The H1 moves but never fades, so the headline paints immediately. */
+  .enter-move {
+    animation: slide var(--dur-enter) var(--ease-out) both;
+  }
+
+  /* Scroll reveal. Content ships visible; the hidden state applies only
+     after the script has run, and never to anything already on screen. */
+  [data-reveal] {
+    transition:
+      opacity var(--dur-enter) var(--ease-out),
+      transform var(--dur-enter) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--stagger));
+  }
+
+  .reveal-on [data-reveal]:not(.is-in) {
+    opacity: 0;
+    transform: translate3d(0, var(--rise), 0);
+  }
+
+  /* Photos ease into place as their block reveals. */
+  .zoomable {
+    transition: transform var(--dur-settle) var(--ease-out);
+  }
+
+  .reveal-on [data-reveal]:not(.is-in) .zoomable {
+    transform: scale(var(--zoom-rest));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .zoomable {
+      transform: scale(var(--zoom-hover));
+    }
+  }
+
+  /* Deep parallax layer: taller than its band, so its edges never show while
+     it travels (see .parallax-deep under scroll-driven motion). */
+  .parallax-deep {
+    position: absolute;
+    inset-inline: 0;
+    inset-block: calc(var(--parallax-overhang) * -1);
+  }
+
+  /* Hero photo: settles into place once, on load. */
+  .hero-photo {
+    animation: settle var(--dur-settle) var(--ease-out) both;
+  }
+
+  .hero-scrim {
+    background-image: var(--gradient-hero-scrim-phone);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-scrim {
+      background-image: var(--gradient-hero-scrim);
+    }
+  }
+
+  /* The phrase that carries the promise: white text on a blue marker that
+     sweeps in behind it once. White on blue is 6.9:1; blue text on the dark
+     photo would not be readable. */
+  .hero-accent {
+    position: relative;
+    isolation: isolate;
+    display: inline-block;
+    white-space: nowrap;
+    color: var(--color-on-band);
+    padding-inline: 0.12em 0.14em;
+    margin-inline-start: -0.12em;
+  }
+
+  .hero-accent::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset-inline: 0;
+    inset-block: 0.1em 0.02em;
+    border-radius: 0.1em;
+    background-color: var(--color-blue);
+    transform-origin: 0 50%;
+    animation: sweep 800ms var(--ease-out) 450ms both;
+  }
+
+  /* Thermostat: inside temperature counts down from the outside reading. */
+  .thermo-value {
+    --temp: 72;
+    counter-reset: temp var(--temp);
+    animation: cool var(--dur-cool) var(--ease-out) 900ms both;
+  }
+
+  .thermo-value::before {
+    content: counter(temp) "\00B0";
+  }
+
+  /* Reviews: one row of equal cards that drifts sideways, edge to edge. Two
+     identical tracks make the loop seamless; the second is hidden from
+     assistive tech and inert. Hover, keyboard focus and the pause button
+     stop it; reduced motion turns it into a still row you scroll by hand. */
+  .review-frame {
+    position: relative;
+    border-radius: var(--radius-sm);
+  }
+
+  .review-frame:has(.review-viewport:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+  }
+
+  .review-viewport {
+    --marquee-gap: var(--space-4);
+    --fade-edge: var(--space-6); /* narrow fades: cards read in full as they pass */
+    display: flex;
+    align-items: stretch;
+    gap: var(--marquee-gap);
+    overflow: hidden;
+    padding-block: var(--space-2) var(--space-4); /* room for the card shadows */
+  }
+
+  @media (min-width: 1024px) {
+    .review-viewport {
+      --marquee-gap: var(--space-5);
+    }
+  }
+
+  /* Moving strips fade out at both ends (the mask reads alpha only). */
+  .fade-edges {
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-mask) var(--fade-edge),
+      var(--color-mask) calc(100% - var(--fade-edge)),
+      transparent
+    );
+  }
+
+  .review-viewport:focus-visible {
+    outline: none;
+  }
+
+  .review-track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: stretch;
+    gap: var(--marquee-gap);
+    min-width: 100%;
+    animation: marquee var(--dur-review-marquee) linear infinite;
+  }
+
+  .review-track > li {
+    display: flex;
+    flex: 0 0 var(--width-review);
+  }
+
+  /* Stops for keyboard focus and for a finger held on the row. */
+  .review-viewport:focus-within .review-track,
+  .review-viewport:active .review-track {
+    animation-play-state: paused;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .review-viewport:hover .review-track {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Airflow lines sway slowly, each at its own pace. */
+  .drift {
+    animation: drift var(--dur-drift) ease-in-out infinite alternate;
+    animation-delay: calc(var(--i, 0) * -3s);
+  }
+
+  .drift-slow {
+    animation-duration: calc(var(--dur-drift) * 1.6);
+  }
+
+  /* Places strip: two identical tracks slide sideways; the second is hidden
+     from assistive tech and inert. Hover or a finger held on it pauses it. */
+  .marquee {
+    --marquee-gap: var(--space-6);
+    --fade-edge: 10%;
+    display: flex;
+    gap: var(--marquee-gap);
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--marquee-gap);
+    min-width: 100%;
+    justify-content: space-around;
+    animation: marquee var(--dur-marquee) linear infinite;
+  }
+
+  .marquee:active .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Right-to-left pages: the strips run the other way. */
+  .marquee-track:dir(rtl),
+  .review-track:dir(rtl) {
+    animation-name: marquee-rtl;
+  }
+
+  /* Plain words, quiet, with a small blue dot after each. */
+  .marquee-word {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    white-space: nowrap;
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    font-variation-settings: "wdth" var(--ui-width);
+    color: var(--color-text-secondary);
+    line-height: 1.2;
+  }
+
+  .marquee-word::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--color-blue);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Booking steps: a track joins each numbered node to the next one. It runs
+     down the start side on phones and across the top on desktop, and fills
+     with blue once, in order, when its step scrolls in. */
+  .step-track {
+    position: absolute;
+    z-index: 0;
+    inset-inline-start: calc(var(--space-6) / 2 - 1px);
+    inset-block-start: var(--space-6);
+    inset-block-end: calc(var(--space-5) * -1);
+    width: 2px;
+    background-color: var(--color-border);
+    overflow: hidden;
+  }
+
+  .step-fill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-blue);
+    transform-origin: 50% 0;
+    transition: transform var(--dur-track) var(--ease-out);
+    transition-delay: 250ms;
+  }
+
+  .reveal-on [data-reveal]:not(.is-in) .step-fill {
+    transform: scaleY(0);
+  }
+
+  @media (min-width: 1024px) {
+    .step-track {
+      inset-block-start: calc(var(--space-6) / 2 - 1px);
+      inset-inline-start: var(--space-6);
+      inset-inline-end: calc(var(--space-5) * -1);
+      inset-block-end: auto;
+      width: auto;
+      height: 2px;
+    }
+
+    .step-fill {
+      transform-origin: 0 50%;
+      transition-delay: calc(250ms + var(--i, 0) * var(--dur-track));
+    }
+
+    .reveal-on [data-reveal]:not(.is-in) .step-fill {
+      transform: scaleX(0);
+    }
+  }
+
+  /* Season band (desktop): its own scrim keeps the text column dark. */
+  .band-scrim {
+    background-image: var(--gradient-even-wash);
+  }
+
+  @media (min-width: 1024px) {
+    .band-scrim {
+      background-image: var(--gradient-band-scrim);
+    }
+  }
+
+  /* Reviews: the five stars light in turn as the rating scrolls in. */
+  .rate-star {
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-spring);
+    transition-delay: calc(300ms + var(--i, 0) * 110ms);
+  }
+
+  .reveal-on [data-reveal]:not(.is-in) .rate-star {
+    opacity: 0.2;
+    transform: scale(0.6);
+  }
+
+  /* FAQ: closed questions sit plain on the section; the open one is a
+     raised card. A light hover on closed ones shows they open. */
+  .faq-item {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .faq-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-card);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .faq-item[open]::before {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .faq-item:not([open]):hover::before {
+      opacity: 0.6;
+    }
+  }
+
+  /* FAQ answers drop in a few pixels from their question when opened. */
+  details[open] > .faq-body {
+    animation: drop-in var(--dur-base) var(--ease-out) both;
+  }
+
+  /*
+   * Booking sheet. Phones: a sheet that rises from the bottom edge on the
+   * iOS drawer curve and can be dragged down to close. Desktop: a centred
+   * dialog that scales in. Closing plays a shorter exit ([data-closing],
+   * set by BookingDialog) before the dialog really closes. The open
+   * animation fills backwards only, so a drag can move the sheet afterwards.
+   */
+  dialog.sheet {
+    margin-block: auto 0;
+    margin-inline: auto;
+    width: 100%;
+    max-width: 100%;
+    max-height: 92dvh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  dialog.sheet[open] {
+    animation: sheet-up var(--dur-sheet) var(--ease-drawer) backwards;
+  }
+
+  dialog.sheet[data-closing] {
+    animation: sheet-down var(--dur-sheet-exit) var(--ease-out) forwards;
+  }
+
+  dialog.sheet::backdrop {
+    background-color: var(--color-backdrop);
+    animation: fade var(--dur-base) var(--ease-out) both;
+  }
+
+  dialog.sheet[data-closing]::backdrop {
+    animation: fade-out var(--dur-sheet-exit) var(--ease-out) forwards;
+  }
+
+  /* While the sheet is open the page behind it stays put. */
+  html:has(dialog.sheet[open]) {
+    overflow: hidden;
+  }
+
+  /* The grab strip at the top of the phone sheet: drags, never scrolls. */
+  .sheet-grab {
+    touch-action: none;
+    cursor: grab;
+  }
+
+  .sheet-grab:active {
+    cursor: grabbing;
+  }
+
+  @media (min-width: 640px) {
+    dialog.sheet {
+      margin: auto;
+      max-width: var(--width-form);
+    }
+
+    dialog.sheet[open] {
+      animation: pop var(--dur-base) var(--ease-out) backwards;
+    }
+
+    dialog.sheet[data-closing] {
+      animation: pop-out var(--dur-fast) var(--ease-out) forwards;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--rise), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translate3d(0, var(--rise), 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/*
+ * Motion tied to scroll position. Pure CSS, transform only, and only where
+ * the browser supports it and the visitor has not asked for less motion.
+ * Elsewhere everything simply sits in its final state.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Photos drift a little slower than the page. */
+    .parallax {
+      animation: parallax linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* The season band: a photo layer taller than the band glides behind it. */
+    .parallax-deep {
+      --parallax-shift: var(--parallax-travel);
+      --parallax-scale: 1;
+    }
+
+    /* The phone booking bar slides in once the hero's own buttons scroll away. */
+    .mobile-bar {
+      animation: bar-in linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px var(--bar-reveal);
+    }
+  }
+}
+
+@property --temp {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 72;
+}
+
+@keyframes cool {
+  from {
+    --temp: 96;
+  }
+  to {
+    --temp: 72;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(var(--zoom-rest));
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes parallax {
+  from {
+    transform: translate3d(0, calc(var(--parallax-shift) * -1), 0) scale(var(--parallax-scale));
+  }
+  to {
+    transform: translate3d(0, var(--parallax-shift), 0) scale(var(--parallax-scale));
+  }
+}
+
+@keyframes bar-in {
+  from {
+    transform: translate3d(0, 130%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(calc(var(--drift) * -1));
+  }
+  to {
+    transform: translateX(var(--drift));
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(calc(-100% - var(--marquee-gap)), 0, 0);
+  }
+}
+
+@keyframes marquee-rtl {
+  to {
+    transform: translate3d(calc(100% + var(--marquee-gap)), 0, 0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* The sheet rises from below the screen edge; no fade, it is a physical sheet. */
+@keyframes sheet-up {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* No `from`: it leaves from wherever a drag left it. */
+@keyframes sheet-down {
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.97);
+  }
+}
+
+@keyframes pop-out {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, calc(var(--drop) * -1), 0);
+  }
+}
+
+@media print {
+  .reveal-on [data-reveal]:not(.is-in) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .reveal-on [data-reveal]:not(.is-in) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .press:active,
+  .hero-photo,
+  .hero-accent::before,
+  .zoomable,
+  .reveal-on [data-reveal]:not(.is-in) .zoomable {
+    transform: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .press:hover,
+    .group:hover .zoomable {
+      transform: none;
+    }
+  }
+
+  /* Ambient motion stops: lines sit still, the places strip wraps instead,
+     and the reviews become a still row you scroll sideways. */
+  .drift,
+  .marquee-track,
+  .review-track {
+    animation: none !important;
+  }
+
+  .marquee {
+    flex-wrap: wrap;
+  }
+
+  .fade-edges {
+    mask-image: none;
+  }
+
+  .marquee-track {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .marquee-track[aria-hidden="true"],
+  .review-track[aria-hidden="true"] {
+    display: none;
+  }
+
+  .review-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--space-gutter);
+    padding-inline: var(--space-gutter);
+  }
+
+  .review-track > li {
+    scroll-snap-align: start;
+  }
+
+  /* The booking sheet still fades in and out: no movement, just presence. */
+  dialog.sheet[open],
+  dialog.sheet[open]::backdrop {
+    animation: fade var(--dur-fast) var(--ease-out) backwards !important;
+  }
+
+  dialog.sheet[data-closing],
+  dialog.sheet[data-closing]::backdrop {
+    animation: fade-out var(--dur-fast) var(--ease-out) forwards !important;
+  }
+}
+
+/* Booking sheet panel: scrolls inside itself on short screens. */
+.sheet-panel {
+  max-height: 92dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Header (light, frosted) ---------- */
+.site-header {
+  background: var(--color-header);
+  box-shadow: var(--shadow-header);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  backdrop-filter: saturate(1.6) blur(14px);
+}
+
+/* At the top of the page the header is solid white; once the page scrolls
+   under it, it turns frosted. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--color-surface);
+}
+
+/* The deeper shadow sits on its own layer and fades in over the first 120px of scroll. */
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  box-shadow: var(--shadow-header-scrolled);
+  opacity: 1;
+}
+
+@supports (animation-timeline: scroll()) {
+  .site-header::before {
+    animation: fade-out linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120px;
+  }
+
+  .site-header::after {
+    opacity: 0;
+    animation: fade-in linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120px;
+  }
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Desktop links: a blue underline draws from the centre on hover and stays
+   under the section on screen (aria-current). */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--space-3);
+  inset-block-end: 0.625rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-blue);
+  transform: scaleX(0);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.nav-link[aria-current]::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Header phone: the icon tilts once, like a ringing handset. */
+  .group:hover .ring-icon {
+    transform: rotate(-12deg);
+  }
+
+  /* Menu rows: the chevron steps down, toward the section. */
+  .group:hover .nudge {
+    transform: translate3d(0, 3px, 0);
+  }
+}
+
+.ring-icon,
+.nudge {
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+
+/* "24/7" status dot: a soft ping three times after the page loads, then still. */
+.live-dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-red);
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  opacity: 0;
+  animation: ping 1.8s var(--ease-out) 0.6s 3;
+}
+
+@keyframes ping {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* Menu button: two lines that turn into a cross. */
+.burger-lines {
+  position: relative;
+  display: block;
+  width: 1.25rem;
+  height: 0.875rem;
+}
+
+.burger-lines > span {
+  position: absolute;
+  inset-inline: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.burger-lines > span:first-child {
+  inset-block-start: 2px;
+}
+
+.burger-lines > span:last-child {
+  inset-block-end: 2px;
+}
+
+[aria-expanded="true"] .burger-lines > span:first-child {
+  transform: translate3d(0, 4px, 0) rotate(45deg);
+}
+
+[aria-expanded="true"] .burger-lines > span:last-child {
+  transform: translate3d(0, -4px, 0) rotate(-45deg);
+}
+
+/* Phone menu drops in quickly; it closes at once. */
+.menu-panel:not([hidden]) {
+  animation: drop-in var(--dur-base) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header::before {
+    animation: none !important;
+  }
+
+  .site-header::after {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  .live-dot::after {
+    animation: none !important;
+  }
+
+  .ring-icon,
+  .nudge,
+  .burger-lines > span {
+    transition: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .ring-icon,
+    .group:hover .nudge {
+      transform: none;
+    }
+  }
+}
+
+/* Town tiles (components/sections/Areas.tsx) lift a little under a pointer. */
+.tile {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.tile:active {
+  transform: scale(0.98);
+}
+
+/* FAQ cards (components/sections/Faq.tsx): the plus turns into a cross. */
+.faq-plus {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+details[open] .faq-plus {
+  transform: rotate(45deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq-row:not([open]) summary:hover h3 {
+    color: var(--color-blue-dark);
+  }
+}
+
+.faq-row summary {
+  transition: transform var(--dur-press, 160ms) var(--ease-out);
+}
+
+.faq-row summary:active {
+  transform: scale(0.995);
+}

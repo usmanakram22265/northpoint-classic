@@ -1,0 +1,223 @@
+/*
+ * THE ONE TOKENS FILE (Northpoint Heating & Air, classic layout).
+ *
+ * Every design value lives here: colour, type, space, radius, shadow, motion
+ * and layout. tailwind.config.ts only maps names to these variables.
+ * One exception: app/fonts.ts loads the font files (next/font needs JS).
+ *
+ * Colour: light theme only. Blue is the brand: links, icons, highlights,
+ * the hero accent, tags and bands, and the outline of secondary buttons
+ * (call). Red fills the main action buttons (Book appointment, submit) and
+ * marks the emergency badge and heating. One token per
+ * colour role below; these are the ONLY colour values in the source.
+ * Shadows, gradients, scrims and see-through layers are the same tokens
+ * mixed with transparency (color-mix), never a new hue.
+ *
+ * Dark band rule: on --color-band, text and icons are white, the secondary
+ * band text or the blue tint. Never blue or red (blue on the band is 2.63:1).
+ * Blue band rule: on --color-blue, text is white or the blue tint only.
+ */
+
+:root {
+  /* ---- Colour: the palette. One token per role ---- */
+  --color-bg: #f7f9fc; /* page background */
+  --color-surface: #ffffff; /* cards, header, forms */
+  --color-surface-subtle: #eef3fa; /* alternate sections */
+  --color-border: #dce3ee; /* hairlines and card borders */
+  --color-text: #0f1b2d; /* text primary */
+  --color-text-secondary: #4a5a70;
+  --color-text-muted: #5f6e84; /* captions, placeholders */
+  --color-blue: #1456c8; /* brand: links, icons, highlights, secondary buttons */
+  --color-blue-dark: #0d3f96; /* hover and pressed, blue text on the tint */
+  --color-blue-tint: #e6effc; /* cooling highlights; also safe text on the band */
+  --color-red: #d62828; /* main action buttons, emergency badge, heating */
+  --color-red-dark: #b01e1e; /* hover and pressed, red text on the tint */
+  --color-red-tint: #fdecec; /* heating and emergency highlights */
+  --color-band: #0f1b2d; /* dark band and footer */
+  --color-on-band: #ffffff; /* text on the band, on blue and on red */
+  --color-on-band-secondary: #b8c4d6; /* secondary text on the band */
+  --color-success: #167a3e;
+  --color-error: #b42318;
+  --color-focus: #1456c8; /* focus ring: 2px solid, 2px offset */
+
+  /* ---- Colour: see-through layers (a palette token plus transparency) ---- */
+  --color-field: color-mix(in srgb, var(--color-text) 58%, transparent); /* form field borders, 3:1 on white */
+  --color-on-band-line: color-mix(in srgb, var(--color-on-band) 16%, transparent); /* hairlines on the band */
+  --color-band-raised: color-mix(in srgb, var(--color-on-band) 6%, transparent); /* panels on the band */
+  --color-header: color-mix(in srgb, var(--color-surface) 86%, transparent); /* frosted header */
+  --color-backdrop: color-mix(in srgb, var(--color-band) 62%, transparent); /* behind the booking sheet */
+  --color-photo-tint: color-mix(in srgb, var(--color-blue) 10%, transparent); /* colour layer on photos */
+  --color-success-tint: color-mix(in srgb, var(--color-success) 10%, transparent);
+  --color-error-tint: color-mix(in srgb, var(--color-error) 9%, transparent);
+  --color-focus-on-band: var(--color-on-band);
+  --color-mask: var(--color-text); /* masks read alpha only */
+
+  /* ---- Type: Mona Sans for display (set wide), Public Sans for reading ---- */
+  --font-display: var(--font-mona), "Helvetica Neue", system-ui, sans-serif;
+  --font-ui: var(--font-mona), "Helvetica Neue", system-ui, sans-serif;
+  --font-body: var(--font-public), "Helvetica Neue", system-ui, sans-serif;
+  --display-width: 112; /* Mona Sans wdth axis for h1 and h2 */
+  --ui-width: 104; /* buttons, labels, card titles */
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: clamp(1rem, 0.97rem + 0.16vw, 1.0625rem);
+  --text-lg: clamp(1.0625rem, 1.02rem + 0.25vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.16rem + 0.45vw, 1.5rem);
+  --text-2xl: clamp(1.625rem, 1.25rem + 1.6vw, 2.5rem);
+  --text-3xl: clamp(2rem, 1.4rem + 2.6vw, 3.375rem);
+  --text-4xl: clamp(2.375rem, 1.3rem + 4.4vw, 4.875rem);
+  --text-stat: clamp(3.5rem, 2.6rem + 3.6vw, 5.25rem); /* the rating number */
+  --text-phone: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+
+  --leading-body: 1.7;
+  --leading-snug: 1.4;
+  --leading-heading: 1.1;
+  --leading-display: 1;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.015em;
+  --tracking-label: 0.08em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 760;
+  --weight-black: 860;
+
+  /* ---- Space: one scale ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-gutter: clamp(1rem, 0.4rem + 2.8vw, 3.5rem); /* page side margin: 16px on a phone */
+  --space-section: clamp(3.5rem, 2.5rem + 4.5vw, 6.5rem);
+  --space-section-tight: clamp(2.5rem, 2rem + 2.4vw, 4rem);
+  /* Phones get their own, tighter section rhythm (see the media query at the end). */
+  --space-section-phone: 2.5rem;
+  --space-section-tight-phone: 2rem;
+
+  /* ---- Layout ---- */
+  --width-page: 72rem;
+  --width-narrow: 44rem;
+  --width-measure: 60ch;
+  --width-form: 27rem;
+  --width-review: clamp(17.5rem, 12rem + 10vw, 21rem); /* one review card: 280px on phones, 336px on desktop */
+  --size-tap: 3rem; /* 48px tap target */
+  --size-tap-lg: 3.5rem; /* 56px large buttons */
+  --size-bar: 4.5rem; /* phone Book / Call bar */
+  --size-header: 4.25rem;
+  --size-mark: 2.5rem; /* logo tile and the header phone icon */
+  --size-mark-sm: 2.25rem; /* logo tile on phones */
+  --sticky-top: calc(var(--size-header) + var(--space-5));
+
+  /* ---- Radius: buttons are pills, photos and panels 18px, cards 14px, inputs 10px ---- */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 18px;
+
+  /* ---- Depth: section -> card -> floating. Tinted with the text and brand blues ---- */
+  --shadow-card: 0 1px 2px color-mix(in srgb, var(--color-text) 6%, transparent), 0 8px 20px -12px color-mix(in srgb, var(--color-blue-dark) 20%, transparent);
+  --shadow-lift: 0 2px 6px color-mix(in srgb, var(--color-text) 8%, transparent), 0 24px 48px -20px color-mix(in srgb, var(--color-blue-dark) 36%, transparent);
+  --shadow-form: 0 6px 14px color-mix(in srgb, var(--color-band) 18%, transparent), 0 40px 80px -28px color-mix(in srgb, var(--color-band) 58%, transparent);
+  --shadow-bar: 0 -12px 30px -14px color-mix(in srgb, var(--color-band) 55%, transparent);
+  --shadow-header: 0 1px 0 color-mix(in srgb, var(--color-text) 7%, transparent);
+  --shadow-header-scrolled: 0 1px 0 color-mix(in srgb, var(--color-text) 5%, transparent), 0 14px 30px -18px color-mix(in srgb, var(--color-blue-dark) 36%, transparent);
+  --shadow-mark: inset 0 0 0 1px color-mix(in srgb, var(--color-blue) 14%, transparent);
+  --shadow-cta: 0 2px 4px color-mix(in srgb, var(--color-red-dark) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-red) 60%, transparent); /* red main-action buttons */
+  --shadow-float: inset 0 1px 0 color-mix(in srgb, var(--color-on-band) 10%, transparent), 0 4px 10px color-mix(in srgb, var(--color-band) 14%, transparent), 0 40px 80px -30px color-mix(in srgb, var(--color-blue-dark) 60%, transparent); /* navy card floating on a light section */
+  --shadow-node: 0 2px 4px color-mix(in srgb, var(--color-blue-dark) 22%, transparent), 0 8px 16px -8px color-mix(in srgb, var(--color-blue) 60%, transparent); /* blue step numbers */
+
+  /* ---- Gradients and texture ---- */
+  --gradient-glow:
+    radial-gradient(56rem 28rem at 100% 0%, color-mix(in srgb, var(--color-blue) 9%, transparent), transparent 60%),
+    radial-gradient(40rem 24rem at 0% 100%, color-mix(in srgb, var(--color-blue-tint) 80%, transparent), transparent 60%);
+  --gradient-band:
+    radial-gradient(52rem 30rem at 0% 0%, color-mix(in srgb, var(--color-blue) 26%, transparent), transparent 60%),
+    radial-gradient(40rem 26rem at 100% 120%, color-mix(in srgb, var(--color-blue) 16%, transparent), transparent 60%);
+  --gradient-blue:
+    radial-gradient(52rem 30rem at 0% 0%, color-mix(in srgb, var(--color-on-band) 10%, transparent), transparent 60%),
+    radial-gradient(44rem 28rem at 100% 120%, color-mix(in srgb, var(--color-blue-dark) 75%, transparent), transparent 62%);
+  --gradient-photo: linear-gradient(0deg, color-mix(in srgb, var(--color-band) 72%, transparent), color-mix(in srgb, var(--color-band) 0%, transparent) 58%);
+  --gradient-hero-scrim: linear-gradient(90deg, color-mix(in srgb, var(--color-band) 90%, transparent) 0%, color-mix(in srgb, var(--color-band) 66%, transparent) 38%, color-mix(in srgb, var(--color-band) 6%, transparent) 66%, color-mix(in srgb, var(--color-band) 0%, transparent) 100%);
+  --gradient-hero-scrim-phone: linear-gradient(0deg, color-mix(in srgb, var(--color-band) 96%, transparent) 0%, color-mix(in srgb, var(--color-band) 84%, transparent) 46%, color-mix(in srgb, var(--color-band) 16%, transparent) 78%, color-mix(in srgb, var(--color-band) 36%, transparent) 100%);
+  --gradient-even-wash: linear-gradient(0deg, color-mix(in srgb, var(--color-band) 92%, transparent), color-mix(in srgb, var(--color-band) 82%, transparent)); /* secondary band text stays above 4.5:1 */
+  /* Reviews: the light section, layered. A blue glow from the top start, a
+     blue-tint wash fading down, and a faint warm red glow at the bottom end,
+     so it echoes the blue and red brand without turning pink. Text on it
+     stays ink / ink-soft (ink-soft is still 5.4:1 at the strongest glow). */
+  --gradient-reviews:
+    radial-gradient(60rem 34rem at 0% 0%, color-mix(in srgb, var(--color-blue) 12%, transparent), transparent 62%),
+    radial-gradient(46rem 30rem at 100% 100%, color-mix(in srgb, var(--color-red) 6%, transparent), transparent 64%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-blue-tint) 80%, transparent), color-mix(in srgb, var(--color-blue-tint) 0%, transparent) 60%);
+  /* Service areas: a cool blue field (tint fading down, a deeper blue glow at
+     the bottom start, a white lift at the top end). Text on it: ink / ink-soft. */
+  --gradient-cool:
+    radial-gradient(44rem 26rem at 100% 0%, color-mix(in srgb, var(--color-surface) 70%, transparent), transparent 62%),
+    radial-gradient(52rem 32rem at 0% 100%, color-mix(in srgb, var(--color-blue) 12%, transparent), transparent 64%),
+    linear-gradient(180deg, var(--color-blue-tint), color-mix(in srgb, var(--color-blue-tint) 70%, var(--color-surface)));
+  /* The navy facts card (quick answer): blue light from the top end. */
+  --gradient-card-band:
+    radial-gradient(28rem 18rem at 100% 0%, color-mix(in srgb, var(--color-blue) 38%, transparent), transparent 70%),
+    radial-gradient(24rem 16rem at 0% 100%, color-mix(in srgb, var(--color-blue) 14%, transparent), transparent 70%);
+  /* FAQ: blue light behind the questions, a faint warm glow at the start. */
+  --gradient-faq:
+    radial-gradient(50rem 30rem at 100% 10%, color-mix(in srgb, var(--color-blue) 10%, transparent), transparent 62%),
+    radial-gradient(36rem 24rem at 0% 100%, color-mix(in srgb, var(--color-red) 5%, transparent), transparent 64%);
+  /* Season band on desktop: dark under the text column, clear over the outdoor unit. */
+  --gradient-band-scrim: linear-gradient(90deg, color-mix(in srgb, var(--color-band) 94%, transparent) 0%, color-mix(in srgb, var(--color-band) 86%, transparent) 40%, color-mix(in srgb, var(--color-band) 48%, transparent) 60%, color-mix(in srgb, var(--color-band) 0%, transparent) 80%);
+  /* Width of the fade at both ends of a moving strip (.fade-edges). */
+  --fade-edge: clamp(1.25rem, 7vw, 8rem);
+  --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  --opacity-grain: 0.05;
+
+  /* ---- Motion: transform and opacity only ---- */
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1); /* small overshoot: arrows, chevrons */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* entrances and press feedback */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* the booking sheet, like an iOS sheet */
+  --dur-press: 160ms;
+  --dur-fast: 150ms;
+  --dur-base: 260ms;
+  --dur-enter: 700ms;
+  --dur-sheet: 420ms;
+  --dur-sheet-exit: 240ms; /* leaving is quicker than arriving */
+  --drop: 6px; /* small drop for menus and FAQ answers */
+  --dur-settle: 1400ms; /* hero photo easing into place */
+  --dur-cool: 2200ms; /* thermostat counting down */
+  --stagger: 80ms;
+  --dur-track: 600ms; /* one segment of the booking-steps track filling */
+  --rise: 22px;
+  --zoom-rest: 1.1; /* photo scale before it settles */
+  --zoom-hover: 1.05;
+  --parallax-scale: 1.07; /* at least 1 + 2 x shift */
+  --parallax-shift: 3%;
+  /* Deep parallax (season band): the photo layer overhangs the band by this
+     much at the top and bottom, and travels a little less than that. */
+  --parallax-overhang: 20%;
+  --parallax-travel: 13%; /* of the layer's own height (1.4 x the band): 0.18 x the band */
+  --bar-reveal: 280px; /* scroll distance over which the phone bar slides in */
+  /* Ambient motion: the things that keep moving. All slow, all pausable. */
+  --dur-drift: 18s;
+  --dur-marquee: 44s;
+  --dur-review-marquee: 40s; /* one loop of the review cards: readable, never rushed */
+  --drift: 44px;
+
+  /* ---- Stacking ---- */
+  --z-header: 40;
+  --z-bar: 50;
+  --z-skip: 100;
+}
+
+/* Phones: every section fits about one screen, so the rhythm tightens. */
+@media (max-width: 639px) {
+  :root {
+    --space-section: var(--space-section-phone);
+    --space-section-tight: var(--space-section-tight-phone);
+  }
+}
