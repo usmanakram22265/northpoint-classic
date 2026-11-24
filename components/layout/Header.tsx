@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Phone } from "lucide-react";
 import { shared } from "@/content/shared";
 import { business } from "@/lib/data/business";
-import { telHref } from "@/lib/format";
+import { homeLink, telHref } from "@/lib/format";
 import { Stars, Wordmark } from "@/components/ui/brand";
 import { BookButton, CallButton, cn } from "@/components/ui/primitives";
 import { DesktopNav } from "@/components/layout/DesktopNav";
@@ -23,7 +23,7 @@ function Rating({ className, asLink = true }: { className?: string; asLink?: boo
   );
   const base = "inline-flex items-center gap-2 whitespace-nowrap";
   return asLink ? (
-    <a href="#reviews" className={cn("link", base, className)}>
+    <a href={homeLink("#reviews")} className={cn("link", base, className)}>
       {content}
     </a>
   ) : (
@@ -77,7 +77,7 @@ export function Header() {
       <header className="site-header sticky top-0 z-header">
         <div className="shell-wide flex h-header items-center justify-between gap-3 xl:grid xl:grid-cols-[auto_1fr_auto] xl:gap-5">
           <a
-            href="#top"
+            href={homeLink("#top")}
             aria-label={`${business.name}, back to top`}
             className="flex min-h-tap shrink-0 items-center rounded-sm transition-opacity duration-fast ease-out hover:opacity-80 active:opacity-60"
           >

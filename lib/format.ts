@@ -7,6 +7,9 @@ import {
   type ServiceSlug,
 } from "@/lib/data/business";
 
+/** An in-page section of the home page, from any route: "#faq" becomes "/#faq". */
+export const homeLink = (hash: string) => `/${hash}`;
+
 export const telHref = `tel:${business.phone.e164}`;
 export const mailHref = `mailto:${business.email}`;
 
@@ -54,4 +57,6 @@ export const townNames = listWithAnd(business.serviceArea.towns);
 export const hasLicense = business.license.number.trim().length > 0;
 
 /** "License 12345", or null while the number is blank. */
-export const licenseLine = hasLicense ? `${business.license.label} ${business.license.number}` : null;
+export const licenseLine = hasLicense
+  ? `${business.license.label} ${business.license.number}`
+  : null;

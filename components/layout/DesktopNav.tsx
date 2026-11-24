@@ -2,6 +2,7 @@
 
 import { shared } from "@/content/shared";
 import { useActiveSection } from "@/lib/hooks/useActiveSection";
+import { homeLink } from "@/lib/format";
 
 const hrefs = shared.nav.links.map((l) => l.href);
 
@@ -18,7 +19,7 @@ export function DesktopNav() {
         {shared.nav.links.map((link) => (
           <li key={link.href}>
             <a
-              href={link.href}
+              href={homeLink(link.href)}
               aria-current={active === link.href ? "location" : undefined}
               className="nav-link flex min-h-tap items-center whitespace-nowrap rounded-sm px-3 font-display text-sm font-medium text-ink-soft hover:text-ink active:opacity-60 aria-[current]:font-semibold aria-[current]:text-ink"
             >

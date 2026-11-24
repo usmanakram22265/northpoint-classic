@@ -4,6 +4,7 @@ import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from "re
 import { ChevronDown } from "lucide-react";
 import { shared } from "@/content/shared";
 import { useActiveSection } from "@/lib/hooks/useActiveSection";
+import { homeLink } from "@/lib/format";
 
 const hrefs = shared.nav.links.map((l) => l.href);
 
@@ -79,13 +80,19 @@ export function MobileNav({ actions }: { actions: ReactNode }) {
                   <li key={link.href}>
                     {/* Section on screen: a light fill, bolder text and a small blue dot. */}
                     <a
-                      href={link.href}
+                      href={homeLink(link.href)}
                       aria-current={current ? "location" : undefined}
                       className="group flex min-h-tap items-center gap-3 rounded-md px-3 font-display text-lg font-semibold text-ink transition-opacity duration-fast ease-out hover:bg-subtle active:opacity-60 aria-[current]:bg-subtle aria-[current]:font-bold"
                     >
-                      {current && <span aria-hidden className="size-2 shrink-0 rounded-full bg-blue" />}
+                      {current && (
+                        <span aria-hidden className="size-2 shrink-0 rounded-full bg-blue" />
+                      )}
                       <span className="flex-1">{link.label}</span>
-                      <ChevronDown aria-hidden className="nudge size-5 shrink-0 text-muted" strokeWidth={2.25} />
+                      <ChevronDown
+                        aria-hidden
+                        className="nudge size-5 shrink-0 text-muted"
+                        strokeWidth={2.25}
+                      />
                     </a>
                   </li>
                 );

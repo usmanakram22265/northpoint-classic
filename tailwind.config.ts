@@ -134,6 +134,7 @@ const config: Config = {
       narrow: "var(--width-narrow)",
       measure: "var(--width-measure)",
       form: "var(--width-form)",
+      embed: "var(--width-embed)",
     },
     zIndex: {
       0: "0",

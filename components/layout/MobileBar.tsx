@@ -1,6 +1,6 @@
 import { CalendarCheck, Phone } from "lucide-react";
 import { shared } from "@/content/shared";
-import { telHref } from "@/lib/format";
+import { homeLink, telHref } from "@/lib/format";
 
 /**
  * Fixed bar on phones and small tablets: book first (red fill), call second
@@ -16,7 +16,7 @@ export function MobileBar() {
     >
       <div className="flex h-bar items-center gap-2 px-3">
         <a
-          href="#book"
+          href={homeLink("#book")}
           data-booking
           data-track="booking-click"
           data-track-location="mobile-bar"

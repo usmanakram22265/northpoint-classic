@@ -41,12 +41,32 @@
   --color-focus: #1456c8; /* focus ring: 2px solid, 2px offset */
 
   /* ---- Colour: see-through layers (a palette token plus transparency) ---- */
-  --color-field: color-mix(in srgb, var(--color-text) 58%, transparent); /* form field borders, 3:1 on white */
-  --color-on-band-line: color-mix(in srgb, var(--color-on-band) 16%, transparent); /* hairlines on the band */
-  --color-band-raised: color-mix(in srgb, var(--color-on-band) 6%, transparent); /* panels on the band */
+  --color-field: color-mix(
+    in srgb,
+    var(--color-text) 58%,
+    transparent
+  ); /* form field borders, 3:1 on white */
+  --color-on-band-line: color-mix(
+    in srgb,
+    var(--color-on-band) 16%,
+    transparent
+  ); /* hairlines on the band */
+  --color-band-raised: color-mix(
+    in srgb,
+    var(--color-on-band) 6%,
+    transparent
+  ); /* panels on the band */
   --color-header: color-mix(in srgb, var(--color-surface) 86%, transparent); /* frosted header */
-  --color-backdrop: color-mix(in srgb, var(--color-band) 62%, transparent); /* behind the booking sheet */
-  --color-photo-tint: color-mix(in srgb, var(--color-blue) 10%, transparent); /* colour layer on photos */
+  --color-backdrop: color-mix(
+    in srgb,
+    var(--color-band) 62%,
+    transparent
+  ); /* behind the booking sheet */
+  --color-photo-tint: color-mix(
+    in srgb,
+    var(--color-blue) 10%,
+    transparent
+  ); /* colour layer on photos */
   --color-success-tint: color-mix(in srgb, var(--color-success) 10%, transparent);
   --color-error-tint: color-mix(in srgb, var(--color-error) 9%, transparent);
   --color-focus-on-band: var(--color-on-band);
@@ -106,7 +126,12 @@
   --width-narrow: 44rem;
   --width-measure: 60ch;
   --width-form: 27rem;
-  --width-review: clamp(17.5rem, 12rem + 10vw, 21rem); /* one review card: 280px on phones, 336px on desktop */
+  --width-embed: 35rem; /* the GHL form pages: one centred column */
+  --width-review: clamp(
+    17.5rem,
+    12rem + 10vw,
+    21rem
+  ); /* one review card: 280px on phones, 336px on desktop */
   --size-tap: 3rem; /* 48px tap target */
   --size-tap-lg: 3.5rem; /* 56px large buttons */
   --size-bar: 4.5rem; /* phone Book / Call bar */
@@ -122,55 +147,160 @@
   --radius-xl: 18px;
 
   /* ---- Depth: section -> card -> floating. Tinted with the text and brand blues ---- */
-  --shadow-card: 0 1px 2px color-mix(in srgb, var(--color-text) 6%, transparent), 0 8px 20px -12px color-mix(in srgb, var(--color-blue-dark) 20%, transparent);
-  --shadow-lift: 0 2px 6px color-mix(in srgb, var(--color-text) 8%, transparent), 0 24px 48px -20px color-mix(in srgb, var(--color-blue-dark) 36%, transparent);
-  --shadow-form: 0 6px 14px color-mix(in srgb, var(--color-band) 18%, transparent), 0 40px 80px -28px color-mix(in srgb, var(--color-band) 58%, transparent);
+  --shadow-card:
+    0 1px 2px color-mix(in srgb, var(--color-text) 6%, transparent),
+    0 8px 20px -12px color-mix(in srgb, var(--color-blue-dark) 20%, transparent);
+  --shadow-lift:
+    0 2px 6px color-mix(in srgb, var(--color-text) 8%, transparent),
+    0 24px 48px -20px color-mix(in srgb, var(--color-blue-dark) 36%, transparent);
+  --shadow-form:
+    0 6px 14px color-mix(in srgb, var(--color-band) 18%, transparent),
+    0 40px 80px -28px color-mix(in srgb, var(--color-band) 58%, transparent);
   --shadow-bar: 0 -12px 30px -14px color-mix(in srgb, var(--color-band) 55%, transparent);
   --shadow-header: 0 1px 0 color-mix(in srgb, var(--color-text) 7%, transparent);
-  --shadow-header-scrolled: 0 1px 0 color-mix(in srgb, var(--color-text) 5%, transparent), 0 14px 30px -18px color-mix(in srgb, var(--color-blue-dark) 36%, transparent);
+  --shadow-header-scrolled:
+    0 1px 0 color-mix(in srgb, var(--color-text) 5%, transparent),
+    0 14px 30px -18px color-mix(in srgb, var(--color-blue-dark) 36%, transparent);
   --shadow-mark: inset 0 0 0 1px color-mix(in srgb, var(--color-blue) 14%, transparent);
-  --shadow-cta: 0 2px 4px color-mix(in srgb, var(--color-red-dark) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-red) 60%, transparent); /* red main-action buttons */
-  --shadow-float: inset 0 1px 0 color-mix(in srgb, var(--color-on-band) 10%, transparent), 0 4px 10px color-mix(in srgb, var(--color-band) 14%, transparent), 0 40px 80px -30px color-mix(in srgb, var(--color-blue-dark) 60%, transparent); /* navy card floating on a light section */
-  --shadow-node: 0 2px 4px color-mix(in srgb, var(--color-blue-dark) 22%, transparent), 0 8px 16px -8px color-mix(in srgb, var(--color-blue) 60%, transparent); /* blue step numbers */
+  --shadow-cta:
+    0 2px 4px color-mix(in srgb, var(--color-red-dark) 22%, transparent),
+    0 12px 24px -12px color-mix(in srgb, var(--color-red) 60%, transparent); /* red main-action buttons */
+  --shadow-float:
+    inset 0 1px 0 color-mix(in srgb, var(--color-on-band) 10%, transparent),
+    0 4px 10px color-mix(in srgb, var(--color-band) 14%, transparent),
+    0 40px 80px -30px color-mix(in srgb, var(--color-blue-dark) 60%, transparent); /* navy card floating on a light section */
+  --shadow-node:
+    0 2px 4px color-mix(in srgb, var(--color-blue-dark) 22%, transparent),
+    0 8px 16px -8px color-mix(in srgb, var(--color-blue) 60%, transparent); /* blue step numbers */
 
   /* ---- Gradients and texture ---- */
   --gradient-glow:
-    radial-gradient(56rem 28rem at 100% 0%, color-mix(in srgb, var(--color-blue) 9%, transparent), transparent 60%),
-    radial-gradient(40rem 24rem at 0% 100%, color-mix(in srgb, var(--color-blue-tint) 80%, transparent), transparent 60%);
+    radial-gradient(
+      56rem 28rem at 100% 0%,
+      color-mix(in srgb, var(--color-blue) 9%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      40rem 24rem at 0% 100%,
+      color-mix(in srgb, var(--color-blue-tint) 80%, transparent),
+      transparent 60%
+    );
   --gradient-band:
-    radial-gradient(52rem 30rem at 0% 0%, color-mix(in srgb, var(--color-blue) 26%, transparent), transparent 60%),
-    radial-gradient(40rem 26rem at 100% 120%, color-mix(in srgb, var(--color-blue) 16%, transparent), transparent 60%);
+    radial-gradient(
+      52rem 30rem at 0% 0%,
+      color-mix(in srgb, var(--color-blue) 26%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      40rem 26rem at 100% 120%,
+      color-mix(in srgb, var(--color-blue) 16%, transparent),
+      transparent 60%
+    );
   --gradient-blue:
-    radial-gradient(52rem 30rem at 0% 0%, color-mix(in srgb, var(--color-on-band) 10%, transparent), transparent 60%),
-    radial-gradient(44rem 28rem at 100% 120%, color-mix(in srgb, var(--color-blue-dark) 75%, transparent), transparent 62%);
-  --gradient-photo: linear-gradient(0deg, color-mix(in srgb, var(--color-band) 72%, transparent), color-mix(in srgb, var(--color-band) 0%, transparent) 58%);
-  --gradient-hero-scrim: linear-gradient(90deg, color-mix(in srgb, var(--color-band) 90%, transparent) 0%, color-mix(in srgb, var(--color-band) 66%, transparent) 38%, color-mix(in srgb, var(--color-band) 6%, transparent) 66%, color-mix(in srgb, var(--color-band) 0%, transparent) 100%);
-  --gradient-hero-scrim-phone: linear-gradient(0deg, color-mix(in srgb, var(--color-band) 96%, transparent) 0%, color-mix(in srgb, var(--color-band) 84%, transparent) 46%, color-mix(in srgb, var(--color-band) 16%, transparent) 78%, color-mix(in srgb, var(--color-band) 36%, transparent) 100%);
-  --gradient-even-wash: linear-gradient(0deg, color-mix(in srgb, var(--color-band) 92%, transparent), color-mix(in srgb, var(--color-band) 82%, transparent)); /* secondary band text stays above 4.5:1 */
+    radial-gradient(
+      52rem 30rem at 0% 0%,
+      color-mix(in srgb, var(--color-on-band) 10%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      44rem 28rem at 100% 120%,
+      color-mix(in srgb, var(--color-blue-dark) 75%, transparent),
+      transparent 62%
+    );
+  --gradient-photo: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-band) 72%, transparent),
+    color-mix(in srgb, var(--color-band) 0%, transparent) 58%
+  );
+  --gradient-hero-scrim: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-band) 90%, transparent) 0%,
+    color-mix(in srgb, var(--color-band) 66%, transparent) 38%,
+    color-mix(in srgb, var(--color-band) 6%, transparent) 66%,
+    color-mix(in srgb, var(--color-band) 0%, transparent) 100%
+  );
+  --gradient-hero-scrim-phone: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-band) 96%, transparent) 0%,
+    color-mix(in srgb, var(--color-band) 84%, transparent) 46%,
+    color-mix(in srgb, var(--color-band) 16%, transparent) 78%,
+    color-mix(in srgb, var(--color-band) 36%, transparent) 100%
+  );
+  --gradient-even-wash: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-band) 92%, transparent),
+    color-mix(in srgb, var(--color-band) 82%, transparent)
+  ); /* secondary band text stays above 4.5:1 */
   /* Reviews: the light section, layered. A blue glow from the top start, a
      blue-tint wash fading down, and a faint warm red glow at the bottom end,
      so it echoes the blue and red brand without turning pink. Text on it
      stays ink / ink-soft (ink-soft is still 5.4:1 at the strongest glow). */
   --gradient-reviews:
-    radial-gradient(60rem 34rem at 0% 0%, color-mix(in srgb, var(--color-blue) 12%, transparent), transparent 62%),
-    radial-gradient(46rem 30rem at 100% 100%, color-mix(in srgb, var(--color-red) 6%, transparent), transparent 64%),
-    linear-gradient(180deg, color-mix(in srgb, var(--color-blue-tint) 80%, transparent), color-mix(in srgb, var(--color-blue-tint) 0%, transparent) 60%);
+    radial-gradient(
+      60rem 34rem at 0% 0%,
+      color-mix(in srgb, var(--color-blue) 12%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      46rem 30rem at 100% 100%,
+      color-mix(in srgb, var(--color-red) 6%, transparent),
+      transparent 64%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-blue-tint) 80%, transparent),
+      color-mix(in srgb, var(--color-blue-tint) 0%, transparent) 60%
+    );
   /* Service areas: a cool blue field (tint fading down, a deeper blue glow at
      the bottom start, a white lift at the top end). Text on it: ink / ink-soft. */
   --gradient-cool:
-    radial-gradient(44rem 26rem at 100% 0%, color-mix(in srgb, var(--color-surface) 70%, transparent), transparent 62%),
-    radial-gradient(52rem 32rem at 0% 100%, color-mix(in srgb, var(--color-blue) 12%, transparent), transparent 64%),
-    linear-gradient(180deg, var(--color-blue-tint), color-mix(in srgb, var(--color-blue-tint) 70%, var(--color-surface)));
+    radial-gradient(
+      44rem 26rem at 100% 0%,
+      color-mix(in srgb, var(--color-surface) 70%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      52rem 32rem at 0% 100%,
+      color-mix(in srgb, var(--color-blue) 12%, transparent),
+      transparent 64%
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-blue-tint),
+      color-mix(in srgb, var(--color-blue-tint) 70%, var(--color-surface))
+    );
   /* The navy facts card (quick answer): blue light from the top end. */
   --gradient-card-band:
-    radial-gradient(28rem 18rem at 100% 0%, color-mix(in srgb, var(--color-blue) 38%, transparent), transparent 70%),
-    radial-gradient(24rem 16rem at 0% 100%, color-mix(in srgb, var(--color-blue) 14%, transparent), transparent 70%);
+    radial-gradient(
+      28rem 18rem at 100% 0%,
+      color-mix(in srgb, var(--color-blue) 38%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      24rem 16rem at 0% 100%,
+      color-mix(in srgb, var(--color-blue) 14%, transparent),
+      transparent 70%
+    );
   /* FAQ: blue light behind the questions, a faint warm glow at the start. */
   --gradient-faq:
-    radial-gradient(50rem 30rem at 100% 10%, color-mix(in srgb, var(--color-blue) 10%, transparent), transparent 62%),
-    radial-gradient(36rem 24rem at 0% 100%, color-mix(in srgb, var(--color-red) 5%, transparent), transparent 64%);
+    radial-gradient(
+      50rem 30rem at 100% 10%,
+      color-mix(in srgb, var(--color-blue) 10%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      36rem 24rem at 0% 100%,
+      color-mix(in srgb, var(--color-red) 5%, transparent),
+      transparent 64%
+    );
   /* Season band on desktop: dark under the text column, clear over the outdoor unit. */
-  --gradient-band-scrim: linear-gradient(90deg, color-mix(in srgb, var(--color-band) 94%, transparent) 0%, color-mix(in srgb, var(--color-band) 86%, transparent) 40%, color-mix(in srgb, var(--color-band) 48%, transparent) 60%, color-mix(in srgb, var(--color-band) 0%, transparent) 80%);
+  --gradient-band-scrim: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-band) 94%, transparent) 0%,
+    color-mix(in srgb, var(--color-band) 86%, transparent) 40%,
+    color-mix(in srgb, var(--color-band) 48%, transparent) 60%,
+    color-mix(in srgb, var(--color-band) 0%, transparent) 80%
+  );
   /* Width of the fade at both ends of a moving strip (.fade-edges). */
   --fade-edge: clamp(1.25rem, 7vw, 8rem);
   --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");

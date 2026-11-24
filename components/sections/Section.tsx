@@ -106,7 +106,10 @@ export function CheckList({ items, className }: { items: readonly string[]; clas
     <ul className={cn("grid gap-3", className)}>
       {items.map((item) => (
         <li key={item} className="flex gap-3">
-          <span aria-hidden className="mt-px flex size-5 shrink-0 items-center justify-center rounded-full bg-blue text-on-color">
+          <span
+            aria-hidden
+            className="mt-px flex size-5 shrink-0 items-center justify-center rounded-full bg-blue text-on-color"
+          >
             <Check className="size-4" strokeWidth={3} />
           </span>
           <span>{item}</span>

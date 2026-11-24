@@ -7,7 +7,6 @@ import { shared } from "@/content/shared";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBar } from "@/components/layout/MobileBar";
-import { BookingDialog } from "@/components/forms/BookingDialog";
 import { RevealProvider } from "@/components/ui/Reveal";
 import { Analytics, ChatSlot } from "@/components/integrations/Slots";
 
@@ -39,7 +38,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </main>
         <Footer />
         <MobileBar />
-        <BookingDialog />
         <Analytics />
         <ChatSlot />
       </body>

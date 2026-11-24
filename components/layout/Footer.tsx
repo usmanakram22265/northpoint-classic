@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { shared } from "@/content/shared";
 import { business } from "@/lib/data/business";
-import { fullAddress, licenseLine, mailHref } from "@/lib/format";
+import { fullAddress, homeLink, licenseLine, mailHref } from "@/lib/format";
 import { Wordmark } from "@/components/ui/brand";
 import { BookButton, PhoneLink } from "@/components/ui/primitives";
 import { FooterCollapse } from "@/components/layout/FooterCollapse";
@@ -30,7 +30,7 @@ function Column({ heading, items }: { heading: string; items: Item[] }) {
         {items.map((item) => (
           <li key={item.label}>
             {item.href ? (
-              <a href={item.href} className={linkClass}>
+              <a href={homeLink(item.href)} className={linkClass}>
                 <span className="link-text">{item.label}</span>
               </a>
             ) : (
@@ -53,7 +53,7 @@ export function Footer() {
         {/* Name, address and phone exactly as on the business profile. */}
         <div className="text-sm">
           <a
-            href="#top"
+            href={homeLink("#top")}
             aria-label={`${business.name}, back to top`}
             className="inline-flex min-h-tap items-center rounded-sm transition-opacity duration-fast ease-out hover:opacity-80 active:opacity-60"
           >
@@ -74,8 +74,14 @@ export function Footer() {
         </div>
 
         <div className="border-t border-on-band-line lg:contents">
-          <Column heading={f.pageHeading} items={[...shared.nav.links, { label: shared.cta.book, href: "#book" }]} />
-          <Column heading={f.servicesHeading} items={business.services.map((s) => ({ label: s.name }))} />
+          <Column
+            heading={f.pageHeading}
+            items={[...shared.nav.links, { label: shared.cta.book, href: "#book" }]}
+          />
+          <Column
+            heading={f.servicesHeading}
+            items={business.services.map((s) => ({ label: s.name }))}
+          />
           <div className="py-4 text-sm lg:py-0">
             <h2 className="label text-on-band">{f.hoursHeading}</h2>
             <ul className="mt-2 leading-body lg:mt-3">

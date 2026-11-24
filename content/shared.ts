@@ -44,7 +44,16 @@ export const shared = {
     base: "Home base",
     city: `Every part of the city, from ${b.serviceArea.neighborhoods[0]} to ${b.serviceArea.neighborhoods[b.serviceArea.neighborhoods.length - 1]}.`,
     /** 8-point compass, clockwise from north. */
-    directions: ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"],
+    directions: [
+      "north",
+      "northeast",
+      "east",
+      "southeast",
+      "south",
+      "southwest",
+      "west",
+      "northwest",
+    ],
     miles: (n: number, dir: string) => `${n} mi ${dir}`,
     askTitle: "Not on the list?",
     askLine: "Book anyway",
@@ -80,31 +89,64 @@ export const shared = {
     sampleNote: "Sample reviews for this demo.",
   },
 
-  form: {
-    title: "Book an appointment",
-    subtitle: "Takes about a minute. We call to confirm the time.",
-    name: "Your name",
-    email: "Email",
-    phone: "Phone number",
-    issue: "What's the problem?",
-    issueHint: "For example: AC runs but the air is warm upstairs.",
-    submit: "Request my appointment",
-    submitting: "Sending...",
+  /** The booking sheet on the home page (the Website Form embed inside). */
+  dialog: {
+    label: "Book appointment",
     close: "Close",
-    reassurance: `${b.estimate.callbackPromise}.`,
-    errorSummary: "Please fix the highlighted fields and send again.",
-    errors: {
-      name: "Enter your name.",
-      email: "Enter a valid email address.",
-      phone: "Enter a 10-digit phone number.",
-      issue: "Tell us briefly what the system is doing.",
-      tooLong: "That's longer than we can accept. Please shorten it.",
+  },
+
+  /**
+   * GoHighLevel embeds. Every form's text, fields, colours, consent and
+   * on-submit behaviour are set in GHL, not here.
+   */
+  ghl: {
+    script: "https://link.scaalus.com/js/form_embed.js",
+    formUrl: "https://link.scaalus.com/widget/form/",
+    surveyUrl: "https://link.scaalus.com/widget/survey/",
+    embeds: {
+      website: { kind: "form", id: "CcEZQaj5hwiYAz6ZLRnI", height: 876, name: "Website Form" },
+      discount: { kind: "form", id: "wDueIfvyuZScUHlgefCQ", height: 658, name: "Discount Form" },
+      clientReview: {
+        kind: "form",
+        id: "PohxYBjegTnAe81XecT6",
+        height: 900,
+        name: "Client Review + 1 Year Followup Sequence Form",
+      },
+      reviewSurvey: {
+        kind: "survey",
+        id: "RCJtOC9wf9hEkbeThLLy",
+        height: 600,
+        name: "Review Survey",
+      },
     },
-    serverError: `Something went wrong on our side and your request was not sent. Please call ${b.phone.display}.`,
-    successHeading: "Request sent",
-    successBody: `Thanks. ${b.estimate.callbackPromise}. For a breakdown that can't wait, call ${b.phone.display} now.`,
-    /** SMS consent: optional, unticked. Names the business, purpose, rates and STOP. */
-    smsConsent: `Text me about this request. I agree to receive text messages from ${b.name} about my service request and appointment at the number above. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.`,
+  },
+
+  /** The standalone form pages. `{phone}` becomes the phone number as a tel: link. */
+  pages: {
+    contact: {
+      title: "Tell us about the problem",
+      line: "We get back to you the same business day.",
+      embed: "website",
+    },
+    discount: {
+      title: "Your past-customer discount",
+      line: "Fill this out and we'll call to set up your visit.",
+      embed: "discount",
+    },
+    review: {
+      title: "How did we do?",
+      line: "Takes 10 seconds.",
+      embed: "reviewSurvey",
+    },
+    marketing: {
+      title: "Add a finished job",
+      line: "Starts the review texts and the 12 months of offers.",
+      embed: "clientReview",
+    },
+    thankYou: {
+      title: "Thanks, we got it.",
+      body: "We'll get back to you the same business day. Need help now? Call {phone}.",
+    },
   },
 
   notFound: {

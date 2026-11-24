@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { ArrowRight, CalendarCheck, Phone } from "lucide-react";
 import { shared } from "@/content/shared";
 import { business } from "@/lib/data/business";
-import { telHref } from "@/lib/format";
+import { homeLink, telHref } from "@/lib/format";
 
 export function cn(...parts: (string | false | null | undefined)[]): string {
   return parts.filter(Boolean).join(" ");
@@ -19,7 +19,8 @@ const variants = {
   secondary:
     "border border-blue bg-transparent text-blue hover:bg-blue-tint hover:text-blue-dark active:bg-blue-tint active:text-blue-dark",
   /** White outline: secondary actions on the dark band and photos (blue fails there). */
-  onBand: "border border-on-band-soft bg-transparent text-on-band hover:bg-band-raised active:bg-band-raised",
+  onBand:
+    "border border-on-band-soft bg-transparent text-on-band hover:bg-band-raised active:bg-band-raised",
 } as const;
 type Variant = keyof typeof variants;
 
@@ -34,13 +35,13 @@ type CtaProps = { location: string; className?: string; size?: Size };
 
 /**
  * The site's one main action, filled red. A real link to the booking form
- * (#book, at the end of the page), so it works with JavaScript off; with it
+ * (/#book, at the end of the home page), so it works with JavaScript off; with it
  * on, BookingDialog opens the form in a sheet.
  */
 export function BookButton({ location, className, size = "md" }: CtaProps) {
   return (
     <a
-      href="#book"
+      href={homeLink("#book")}
       data-booking
       data-track="booking-click"
       data-track-location={location}
@@ -79,7 +80,9 @@ export function CallButton({
           <span className="hidden lining-nums tabular-nums sm:inline">{shared.cta.call}</span>
         </>
       ) : (
-        <span className="lining-nums tabular-nums">{short ? shared.cta.callShort : shared.cta.call}</span>
+        <span className="lining-nums tabular-nums">
+          {short ? shared.cta.callShort : shared.cta.call}
+        </span>
       )}
     </a>
   );
@@ -107,7 +110,9 @@ export function PhoneLink({
       )}
     >
       <Phone aria-hidden className="size-5 shrink-0" strokeWidth={2.25} />
-      <span className="link-text whitespace-nowrap lining-nums tabular-nums">{business.phone.display}</span>
+      <span className="link-text whitespace-nowrap lining-nums tabular-nums">
+        {business.phone.display}
+      </span>
     </a>
   );
 }
@@ -125,7 +130,10 @@ export function ArrowLink({
   return (
     <a
       href={href}
-      className={cn("link group inline-flex min-h-tap items-center gap-2 font-display font-semibold text-blue", className)}
+      className={cn(
+        "link group inline-flex min-h-tap items-center gap-2 font-display font-semibold text-blue",
+        className,
+      )}
     >
       <span className="link-text">{children}</span>
       <ArrowRight

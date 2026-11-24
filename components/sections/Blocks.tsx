@@ -14,7 +14,7 @@ import { shared } from "@/content/shared";
 import { business } from "@/lib/data/business";
 import type { Review } from "@/lib/data/business";
 import { getReview, hoursSummary } from "@/lib/format";
-import { LeadForm } from "@/components/forms/LeadForm";
+import { GhlEmbed } from "@/components/integrations/GhlEmbed";
 import { Stars } from "@/components/ui/brand";
 import { Marquee } from "@/components/ui/Marquee";
 import { Photo, PhotoBackdrop } from "@/components/ui/Photo";
@@ -434,7 +434,7 @@ function Book({ block }: Props<BookBlock>) {
               </ul>
             </div>
             <div data-inline-form className="on-light rounded-lg bg-surface p-4 shadow-form sm:p-6">
-              <LeadForm idPrefix="book" compact />
+              <GhlEmbed embed="website" />
             </div>
           </div>
         </div>

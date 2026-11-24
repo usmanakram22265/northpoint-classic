@@ -41,10 +41,22 @@ export function CoverPhoto({
   const img = getImage(image);
   if (!fileExists(img.src)) return null;
   const common = { alt, quality: PHOTO_QUALITY };
-  const wide = getImageProps({ ...common, src: img.src, width: img.width, height: img.height, sizes }).props;
+  const wide = getImageProps({
+    ...common,
+    src: img.src,
+    width: img.width,
+    height: img.height,
+    sizes,
+  }).props;
   const cropSrc = img.src.replace("/images/", "/images/phone/");
   const tall = fileExists(cropSrc)
-    ? getImageProps({ ...common, src: cropSrc, width: PHONE.width, height: PHONE.height, sizes: PHONE_SIZES }).props
+    ? getImageProps({
+        ...common,
+        src: cropSrc,
+        width: PHONE.width,
+        height: PHONE.height,
+        sizes: PHONE_SIZES,
+      }).props
     : null;
 
   if (eager) {
@@ -113,7 +125,15 @@ type Props = {
  * Framed photo. Every photo gets the same treatment: a blue multiply tint and
  * a bottom gradient. A missing file leaves the tinted frame empty.
  */
-export function Photo({ image, ratio, sizes, eager = false, motion, scrim = "soft", className }: Props) {
+export function Photo({
+  image,
+  ratio,
+  sizes,
+  eager = false,
+  motion,
+  scrim = "soft",
+  className,
+}: Props) {
   const img = getImage(image);
   return (
     // `clip`, not `overflow-hidden`: a hidden box would capture the parallax scroll timeline.
@@ -134,7 +154,10 @@ export function Photo({ image, ratio, sizes, eager = false, motion, scrim = "sof
               motion === "parallax" && "parallax",
             )}
           />
-          <span aria-hidden className="pointer-events-none absolute inset-0 bg-photo-tint mix-blend-multiply" />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-photo-tint mix-blend-multiply"
+          />
           <span
             aria-hidden
             className={cn(

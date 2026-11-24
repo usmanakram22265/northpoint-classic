@@ -1,7 +1,7 @@
 import { ArrowRight, Snowflake, Sun } from "lucide-react";
 import type { HeroBlock } from "@/content/types";
 import { shared } from "@/content/shared";
-import { LeadForm } from "@/components/forms/LeadForm";
+import { GhlEmbed } from "@/components/integrations/GhlEmbed";
 import { Airflow } from "@/components/ui/Airflow";
 import { Stars } from "@/components/ui/brand";
 import { CoverPhoto } from "@/components/ui/Photo";
@@ -28,7 +28,10 @@ function Thermostat({ className }: { className?: string }) {
   return (
     <div
       aria-hidden
-      className={cn("enter inline-flex items-center gap-4 rounded-md bg-surface px-4 py-3 shadow-lift sm:gap-5 sm:px-5", className)}
+      className={cn(
+        "enter inline-flex items-center gap-4 rounded-md bg-surface px-4 py-3 shadow-lift sm:gap-5 sm:px-5",
+        className,
+      )}
       style={stagger(5)}
     >
       <span className="flex items-center gap-3">
@@ -37,7 +40,9 @@ function Thermostat({ className }: { className?: string }) {
         </span>
         <span className="flex flex-col">
           <span className="label text-muted">Outside</span>
-          <span className="font-display text-xl font-bold leading-none text-red-dark lining-nums">96°</span>
+          <span className="font-display text-xl font-bold leading-none text-red-dark lining-nums">
+            96°
+          </span>
         </span>
       </span>
       <ArrowRight className="size-4 shrink-0 text-muted" />
@@ -100,7 +105,10 @@ export function Hero({ block }: { block: HeroBlock }) {
               <CallButton location="hero" size="lg" onDark />
             </div>
 
-            <div className="enter mt-6 hidden flex-wrap items-center gap-x-7 gap-y-3 lg:flex" style={stagger(3)}>
+            <div
+              className="enter mt-6 hidden flex-wrap items-center gap-x-7 gap-y-3 lg:flex"
+              style={stagger(3)}
+            >
               <RatingLine />
               <PhoneLink location="hero" onDark className="text-lg" />
             </div>
@@ -114,7 +122,7 @@ export function Hero({ block }: { block: HeroBlock }) {
           className="enter on-light hidden rounded-lg bg-surface p-6 shadow-form lg:block"
           style={stagger(2)}
         >
-          <LeadForm idPrefix="hero" />
+          <GhlEmbed embed="website" />
         </div>
       </div>
     </section>

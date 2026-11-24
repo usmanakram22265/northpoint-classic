@@ -22,7 +22,13 @@ export function Needle({ className }: { className?: string }) {
  * (the header) drops the "Heating & Air" line on the narrowest phones, so the
  * phone number fits beside it.
  */
-export function Wordmark({ onDark = false, compact = false }: { onDark?: boolean; compact?: boolean }) {
+export function Wordmark({
+  onDark = false,
+  compact = false,
+}: {
+  onDark?: boolean;
+  compact?: boolean;
+}) {
   return (
     <span className="flex items-center gap-2 sm:gap-3">
       <span

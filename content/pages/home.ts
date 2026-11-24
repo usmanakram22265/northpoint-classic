@@ -36,7 +36,8 @@ export const homeBlocks: Block[] = [
     id: "how-it-works",
     tone: "page",
     heading: "How does booking work?",
-    intro: "Four steps from the form to a comfortable house. You see the estimate before the last one.",
+    intro:
+      "Four steps from the form to a comfortable house. You see the estimate before the last one.",
     steps: [
       {
         title: "Send the form",
