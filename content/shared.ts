@@ -123,8 +123,7 @@ export const shared = {
     chat: {
       script: "https://widgets.leadconnectorhq.com/loader.js",
       resourcesUrl: "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
-      // widgetId: "6b070b40109c42556ce94c7d",
-      widgetId: "6b09ddef84c6650788b03ec7",
+      widgetId: "6b070b40109c42556ce94c7d",
       excludePaths: ["/review"],
     },
   },
