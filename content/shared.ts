@@ -119,6 +119,13 @@ export const shared = {
         name: "Review Survey",
       },
     },
+    /** The chat bubble: loads lazily on every page except these paths. Its look is set in GHL. */
+    chat: {
+      script: "https://widgets.leadconnectorhq.com/loader.js",
+      resourcesUrl: "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+      widgetId: "6b070b40109c42556ce94c7d",
+      excludePaths: ["/review"],
+    },
   },
 
   /** The standalone form pages. `{phone}` becomes the phone number as a tel: link. */

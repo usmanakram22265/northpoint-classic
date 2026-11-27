@@ -136,6 +136,10 @@
   --size-tap-lg: 3.5rem; /* 56px large buttons */
   --size-bar: 4.5rem; /* phone Book / Call bar */
   --size-header: 4.25rem;
+  /* GHL chat bubble, as GHL draws it (set in GHL, measured here): 58px,
+     20px in from the bottom and end edges. */
+  --size-chat-bubble: 58px;
+  --chat-bubble-offset: 20px;
   --size-mark: 2.5rem; /* logo tile and the header phone icon */
   --size-mark-sm: 2.25rem; /* logo tile on phones */
   --sticky-top: calc(var(--size-header) + var(--space-5));

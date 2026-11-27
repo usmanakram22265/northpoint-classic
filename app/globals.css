@@ -820,7 +820,7 @@
 
 @keyframes bar-in {
   from {
-    transform: translate3d(0, 130%, 0);
+    transform: translate3d(0, calc(130% + var(--chat-lift, 0px)), 0);
   }
   to {
     transform: translate3d(0, 0, 0);
@@ -1223,4 +1223,24 @@ details[open] .faq-plus {
 
 .faq-row summary:active {
   transform: scale(0.995);
+}
+
+/*
+ * GHL chat bubble (components/integrations/ChatWidget.tsx). On phones and
+ * tablets it would sit on the booking bar's Call button, so while the widget
+ * is on the page the bar moves up past the bubble plus 16px, and the footer's
+ * bottom padding grows to match. The widget itself is not restyled.
+ */
+@media (max-width: 1023px) {
+  body:has(chat-widget) {
+    --chat-lift: calc(var(--chat-bubble-offset) + var(--size-chat-bubble) + var(--space-4));
+  }
+
+  body:has(chat-widget) .mobile-bar {
+    inset-block-end: var(--chat-lift);
+  }
+
+  body:has(chat-widget) > footer {
+    padding-block-end: calc(var(--size-bar) + var(--chat-lift));
+  }
 }

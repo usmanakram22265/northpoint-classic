@@ -1,3 +1,5 @@
+import { ChatWidget } from "@/components/integrations/ChatWidget";
+
 /**
  * INTEGRATION SLOTS. Each renders nothing until a provider is chosen.
  * Search the codebase for "INTEGRATION SLOT" to find every one.
@@ -12,7 +14,7 @@ export function Analytics() {
   return null;
 }
 
-/** INTEGRATION SLOT: chat widget. Rendered once in app/layout.tsx. */
+/** Chat widget (GHL). Rendered once in app/layout.tsx. */
 export function ChatSlot() {
-  return null;
+  return <ChatWidget />;
 }
